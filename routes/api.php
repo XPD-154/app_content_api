@@ -28,6 +28,8 @@ Route::post('/me', [AuthController::class, 'me']);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
+    Route::get('/api_list', [fetchController::class, 'index']);
+
     Route::get('/onboarding/{key?}', [fetchController::class, 'getOnboarding']);
     Route::get('/call/{key?}', [fetchController::class, 'getCall']);
     Route::get('/home/{key?}', [fetchController::class, 'getHome']);

@@ -23,6 +23,24 @@ class fetchController extends Controller
 {
     //
     
+    function index(){
+        return ["Instruction"=>"This is the instruction associated with use of the API. The Endpoints associated every section of the UI/UX design is listed below. Upon call with the appropriate token, the listing of content associated that section of the design will be fetched. To fetch the specific content of an aspect of a page, just append its appropriate key the Endpoint.",
+                "Mobile App Content API Listing"=>[
+                    "Onboarding"=>"https://ucall.ng/app_content/api/onboarding/", 
+                    "Call"=>"https://ucall.ng/app_content/api/call/",
+                    "Home"=>"https://ucall.ng/app_content/api/home/",
+                    "Loading Screen"=>"https://ucall.ng/app_content/api/loading_screen/",
+                    "Menu Settings"=>"https://ucall.ng/app_content/api/menu_settings/",
+                    "Notification"=>"https://ucall.ng/app_content/api/notification/",
+                    "Packages"=>"https://ucall.ng/app_content/api/packages/",
+                    "Recharge"=>"https://ucall.ng/app_content/api/recharge/",
+                    "Sign Up"=>"https://ucall.ng/app_content/api/sign_up/",
+                    "Transaction History"=>"https://ucall.ng/app_content/api/transaction_history/",
+                    "VAS"=>"https://ucall.ng/app_content/api/vas/", 
+                    "Sign In Forgot Password"=>"https://ucall.ng/app_content/api/sign_in_forgot_password/"
+                ]
+            ];
+    }
 
     function getOnboarding($key=null){
 
