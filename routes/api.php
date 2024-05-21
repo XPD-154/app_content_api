@@ -2,8 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\authController;
-use App\Http\Controllers\fetchController;
+use App\Http\Controllers\{
+    authController,
+    fetchController,
+    faqController,
+    notifyController,
+};
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,5 +47,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/sign_up/{key?}', [fetchController::class, 'getSignUp']);
     Route::get('/transaction_history/{key?}', [fetchController::class, 'getTransactionHistory']);
     Route::get('/vas/{key?}', [fetchController::class, 'getVas']);
+
+    Route::get('/search_faq/{title?}', [faqController::class, 'fetchData']);
+    Route::post('/insert_faq', [faqController::class, 'insertData']);
+    Route::put('/update_faq', [faqController::class, 'updateData']);
+
+    Route::get('/search_info/{title?}', [notifyController::class, 'fetchData']);
+    Route::post('/insert_info', [notifyController::class, 'insertData']);
+    Route::put('/update_info', [notifyController::class, 'updateData']);
 
 });
