@@ -10,17 +10,14 @@ use App\Models\User;
 
 class authController extends Controller
 {
-    //
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
+
+    //separate these functions from auth
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'newPassword']]);
     }
 
+    //method for customer register
     public function register(Request $request){
 
         //collect field values and validate
@@ -45,11 +42,8 @@ class authController extends Controller
             "token"=>$token
         ];
     }
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    
+    //method the login of customer
     public function login(Request $request)
     {
         
@@ -58,7 +52,8 @@ class authController extends Controller
             'email' => 'required',
             'password' => 'required'
         ]);
-
+        
+        //verify the user and produce a token
         $token = Auth::attempt($credentials);
 
         if (!$token) {
@@ -75,21 +70,57 @@ class authController extends Controller
         ];
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    //method for setting a new password
+    public function newPassword(Request $request){
+        
+        //collect field values and validate
+        $credentials = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+            'confirm_password' => 'required'
+        ]);
+        
+        //validate the accuracy of passwords
+        if($credentials['password']==$credentials['confirm_password']){
+
+            //select the password value and encryth
+            $credentials['password'] = bcrypt($credentials['password']);
+
+            //find customer in the database
+            $user_email = $credentials['email'];
+
+            $password_change_request = User::where('email', '=', $user_email)->first();
+
+            //verify if the customer exists in the system
+            if($password_change_request){
+
+                //change the password
+                $password_change_request->password = $credentials['password'];
+
+                $result = $password_change_request->save();
+
+                if($result){
+                    return ["status"=>"success", "message"=>"password changed successfully"];
+                }else{
+                    return ["status"=>"error", "message"=>"failed password update"];
+                }
+
+            }else{
+                return ["status"=>"error", "message"=>"user doesn't exist"];
+            }
+
+        }else{
+            return ["status"=>"error", "message"=>"incorrect password parameters"];
+        }
+    }
+
+    //fetch information associated with user
     public function me()
     {
         return response()->json(auth()->user());
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    //logout user out of system
     public function logout()
     {
         auth()->logout();
@@ -97,11 +128,7 @@ class authController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    //Refresh a token
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());

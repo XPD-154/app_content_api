@@ -24,10 +24,11 @@ use App\Http\Controllers\{
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-*/
+*/ 
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/change_password', [AuthController::class, 'newPassword']);
 Route::post('/me', [AuthController::class, 'me']);
 
 

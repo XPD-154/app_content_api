@@ -19,13 +19,15 @@ use App\Models\{
     Vas,
 };
 
+
 class fetchController extends Controller
 {
-    //
-    
+    //instructions for Associated API
     function index(){
-        return ["Instruction"=>"This is the instruction associated with use of the API. The Endpoints associated every section of the UI/UX design is listed below. Upon call with the appropriate token, the listing of content associated that section of the design will be fetched. To fetch the specific content of an aspect of a page, just append its appropriate key the Endpoint.",
-                "Mobile App Content API Listing"=>[
+        return [
+            "status"=>"success",
+            "Instruction"=>"This is the instruction associated with use of the API. The Endpoints associated every section of the UI/UX design is listed below. Upon call with the appropriate token, the listing of content associated that section of the design will be fetched. To fetch the specific content of an aspect of a page, just append its appropriate key the Endpoint.",
+            "Mobile App Content API Listing"=>[
                     "Onboarding"=>"https://univasa.com/app_content/api/onboarding/", 
                     "Call"=>"https://univasa.com/app_content/api/call/",
                     "Home"=>"https://univasa.com/app_content/api/home/",
@@ -40,10 +42,11 @@ class fetchController extends Controller
                     "Sign In Forgot Password"=>"https://univasa.com/app_content/api/sign_in_forgot_password/",
                     "Notification Information"=>"https://univasa.com/app_content/api/search_info/",
                     "FAQ Information"=>"https://univasa.com/app_content/api/search_faq/",
-                ]
-            ];
+            ]
+        ];
     }
 
+    //function for Onboarding section
     function getOnboarding($key=null){
 
         if($key){
@@ -51,18 +54,32 @@ class fetchController extends Controller
             $result = Onboarding::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+        
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
             }
 
         }else{
-
-            return Onboarding::all('key','value'); 
+ 
+            $result = Onboarding::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for call section
     function getCall($key=null){
 
         if($key){
@@ -70,18 +87,32 @@ class fetchController extends Controller
             $result = Call::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];
             }
 
         }else{
 
-            return Call::all('key','value');  
+            $result=Call::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];  
         }
         
     }
 
+    //call for home section
     function getHome($key=null){
 
         if($key){
@@ -89,18 +120,32 @@ class fetchController extends Controller
             $result = Home::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return Home::all('key','value');  
+            $result = Home::all('key','value');  
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for loading screen section
     function getLoadingScreen($key=null){
 
         if($key){
@@ -108,18 +153,32 @@ class fetchController extends Controller
             $result = LoadingScreen::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return LoadingScreen::all('key','value');
+            $result = LoadingScreen::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for settings section
     function getMenuSettings($key=null){
 
         if($key){
@@ -127,18 +186,32 @@ class fetchController extends Controller
             $result = MenuSettings::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return MenuSettings::all('key','value'); 
+            $result = MenuSettings::all('key','value'); 
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for Notification section
     function getNotification($key=null){
 
         if($key){
@@ -146,18 +219,32 @@ class fetchController extends Controller
             $result = Notification::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
             }
 
         }else{
 
-            return Notification::all('key','value'); 
+            $result = Notification::all('key','value'); 
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for package section
     function getPackages($key=null){
 
         if($key){
@@ -165,18 +252,32 @@ class fetchController extends Controller
             $result = Packages::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
             }
 
         }else{
 
-            return Packages::all('key','value'); 
+            $result = Packages::all('key','value'); 
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for recharge section
     function getRecharge($key=null){
 
         if($key){
@@ -184,18 +285,32 @@ class fetchController extends Controller
             $result = Recharge::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return Recharge::all('key','value');
+            $result = Recharge::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for sign in/forgot password section
     function getSignInFp($key=null){
 
         if($key){
@@ -203,18 +318,32 @@ class fetchController extends Controller
             $result = SignInFp::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return SignInFp::all('key','value');
+            $result = SignInFp::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for sign up section
     function getSignUp($key=null){
 
         if($key){
@@ -222,18 +351,32 @@ class fetchController extends Controller
             $result = SignUp::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
             }
 
         }else{
 
-            return SignUp::all('key','value'); 
+            $result = SignUp::all('key','value'); 
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for transaction section
     function getTransactionHistory($key=null){
 
         if($key){
@@ -241,18 +384,32 @@ class fetchController extends Controller
             $result = TransactionHistory::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
             }
 
         }else{
 
-            return TransactionHistory::all('key','value');
+            $result = TransactionHistory::all('key','value');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
 
+    //function for VAS section
     function getVas($key=null){
 
         if($key){
@@ -260,14 +417,27 @@ class fetchController extends Controller
             $result = Vas::select('key','value')->where("key", "like", "%".$key."%")->get();
 
             if(count($result) > 0){
-                return $result;
+
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
             }else{
-                return ["status"=>"error", "message"=>"no matching data"]; 
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ];  
             }
 
         }else{
 
-            return Vas::all('key','value'); 
+            $result = Vas::all('key','value'); 
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
         }
         
     }
