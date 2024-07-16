@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     fetchController,
     faqController,
     notifyController,
+    insertImageController,
 };
 
 /*
@@ -56,5 +57,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/search_info/{title?}', [notifyController::class, 'fetchData']);
     Route::post('/insert_info', [notifyController::class, 'insertData']);
     Route::put('/update_info', [notifyController::class, 'updateData']);
+
+    Route::post('/imgupload', [insertImageController::class, 'imageUpload']);
+    Route::get('/userImage/{key?}', [fetchController::class, 'userImages']);
 
 });

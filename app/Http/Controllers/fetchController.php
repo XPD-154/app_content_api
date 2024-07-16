@@ -17,6 +17,7 @@ use App\Models\{
     TransactionHistory,
     User,
     Vas,
+    userImage,
 };
 
 
@@ -28,6 +29,7 @@ class fetchController extends Controller
             "status"=>"success",
             "Instruction"=>"This is the instruction associated with use of the API. The Endpoints associated every section of the UI/UX design is listed below. Upon call with the appropriate token, the listing of content associated that section of the design will be fetched. To fetch the specific content of an aspect of a page, just append its appropriate key the Endpoint.",
             "Mobile App Content API Listing"=>[
+                    "User Images"=>"https://univasa.com/app_content/api/userImage/", 
                     "Onboarding"=>"https://univasa.com/app_content/api/onboarding/", 
                     "Call"=>"https://univasa.com/app_content/api/call/",
                     "Home"=>"https://univasa.com/app_content/api/home/",
@@ -44,6 +46,39 @@ class fetchController extends Controller
                     "FAQ Information"=>"https://univasa.com/app_content/api/search_faq/",
             ]
         ];
+    }
+
+    //function for user images
+    function userImages($key=null){
+
+        if($key){
+
+            $result = userImage::select('user_id','image')->where("user_id", "like", "%".$key."%")->get();
+
+            if(count($result) > 0){
+        
+                return [
+                    "status"=>"success",
+                    "data"=>$result
+                ];
+
+            }else{
+
+                return [
+                    "status"=>"error", 
+                    "message"=>"no matching data"
+                ]; 
+            }
+
+        }else{
+ 
+            $result = userImage::all('user_id','image');
+            return [
+                "status"=>"success",
+                "data"=>$result
+            ];
+        }
+        
     }
 
     //function for Onboarding section
