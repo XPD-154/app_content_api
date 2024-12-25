@@ -53,7 +53,7 @@ class authController extends Controller
             'password' => 'required'
         ]);
         
-        //verify the user and produce a token
+        //verify the user and produce a token 
         $token = Auth::attempt($credentials);
 
         if (!$token) {

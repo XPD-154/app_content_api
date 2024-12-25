@@ -13,7 +13,8 @@ class insertImageController extends Controller
         if($request->has('user_id') && $request->has('image')) {
 
                 $user_id = $request['user_id'];
-                $img_url = "https://univasa.com/app_content/storage/app/public/user_img/";
+                //$img_url = "https://univasa.com/app_content/storage/app/public/user_img/";
+                $img_url = "https://ucall.ng/app_content/storage/app/public/user_img/";
 
                 if($request->hasFile('image')) {
 
@@ -32,35 +33,23 @@ class insertImageController extends Controller
 
                 }else{
 
-                    return [
-                        "status"=>"error", 
-                        "message"=>"no image file"
-                    ];
+                    return response()->json(["status"=>"error", "message"=>"no image file"], 422);
                 }
 
                 // save file in databse
                 if($postObj->save()) { 
 
-                    return [
-                        'status' => "success",
-                        'message' => "Image uploded successfully",
-                        'image'=> strval($img_url.$createnewFileName)
-                    ];
+                    return response()->json(['status' => "success", 'message' => "Image uploded successfully", 'image'=> strval($img_url.$createnewFileName)], 200);
 
                 }else {
 
-                    return [
-                        'status' => "error", 
-                        'message' => "Image not uploded successfully"
-                    ];       
+                    return response()->json(["status"=>"error", "message"=>"Image not uploded successfully"], 422);      
 
                 }
         }else{
 
-            return [
-                "status"=>"error", 
-                "message"=>"incomplete data"
-            ];
+            return response()->json(["status"=>"error", "message"=>"incomplete data"], 422); 
+           
         }
 
     }
